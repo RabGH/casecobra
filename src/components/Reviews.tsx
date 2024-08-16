@@ -3,8 +3,9 @@
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { cn } from "@/lib/utils";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import Phone from "@/components/Phone";
 
 const PHONES = [
   "/testimonials/1.jpg",
@@ -28,6 +29,40 @@ function splitArray<T>(array: Array<T>, numParts: number) {
     result[index].push(array[i]);
   }
   return result;
+}
+
+interface ReviewProps extends HTMLAttributes<HTMLDivElement> {
+  imgSrc: string;
+}
+// {...props} should be at the end, so it doesn't override
+function Review({ imgSrc, className, ...props }: ReviewProps) {
+  const POSSIBLE_ANIMATION_DELAYS = [
+    "0s",
+    "0.1s",
+    "0.2s",
+    "0.3s",
+    "0.4s",
+    "0.5s",
+  ];
+
+  // choose any random number, string and animation delay
+  const animationDelay =
+    POSSIBLE_ANIMATION_DELAYS[
+      Math.floor(Math.random() * POSSIBLE_ANIMATION_DELAYS.length)
+    ];
+
+  return (
+    <div
+      className={cn(
+        "animate-fade-in rounded-[2.25rem] bg-white p-6 opacity-0 shadow-xl shadow-slate-900/5",
+        className
+      )}
+      style={{ animationDelay }}
+      {...props}
+    >
+      <Phone imgSrc={imgSrc} />
+    </div>
+  );
 }
 
 function ReviewColumn({
@@ -68,7 +103,15 @@ function ReviewColumn({
       ref={columnRef}
       className={cn("animate-marquee space-y-8 py-4", className)}
       style={{ "--marquee-duration": duration } as React.CSSProperties}
-    ></div>
+    >
+      {reviews.concat(reviews).map((imgSrc, reviewIndex) => (
+        <Review
+          key={reviewIndex}
+          className={reviewClassName?.(reviewIndex % reviews.length)}
+          imgSrc={imgSrc}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -76,9 +119,9 @@ function ReviewGrid() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.4 });
   const columns = splitArray(PHONES, 3);
-  const columns1 = columns[0];
-  const columns2 = columns[1];
-  const columns3 = splitArray(columns[2], 2);
+  const column1 = columns[0];
+  const column2 = columns[1];
+  const column3 = splitArray(columns[2], 2);
 
   return (
     <div
@@ -87,7 +130,29 @@ function ReviewGrid() {
     >
       {isInView ? (
         <>
-          <ReviewColumn />
+          <ReviewColumn
+            reviews={[...column1, ...column3.flat(), ...column2]}
+            reviewClassName={(reviewIndex) =>
+              cn({
+                "md:hidden": reviewIndex >= column1.length + column3[0].length,
+                "lg:hidden": reviewIndex >= column1.length,
+              })
+            }
+            msPerPixel={10}
+          />
+          <ReviewColumn
+            reviews={[...column2, ...column3[1]]}
+            className="hidden md:block"
+            reviewClassName={(reviewIndex) =>
+              reviewIndex >= column2.length ? "lg:hidden" : ""
+            }
+            msPerPixel={15}
+          />
+          <ReviewColumn
+            reviews={column3.flat()}
+            className="hidden md:block"
+            msPerPixel={10}
+          />
         </>
       ) : null}
     </div>
@@ -96,7 +161,7 @@ function ReviewGrid() {
 
 export function Reviews() {
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="relative max-w-5xl">
       <img
         aria-hidden="true"
         src="/what-people-are-buying.png"
