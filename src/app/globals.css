@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,12 +48,20 @@
     --ring: 142.4 71.8% 29.2%;
   }
 }
-  
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /*! Utilities */
+  .transition150 {
+    @apply transition-all ease-in-out duration-150;
+  }
+  .transition300 {
+    @apply transition-all ease-in-out duration-300;
+  }
+}
