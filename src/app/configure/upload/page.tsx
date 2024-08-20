@@ -12,7 +12,9 @@ const UploadPage = () => {
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 
-  const {} = useUploadThing("imageUploader");
+  const {} = useUploadThing("imageUploader", {
+    onClientUploadComplete: ([data]) => {},
+  });
 
   const onDropRejected = () => {};
   const onDropAccepted = () => {
