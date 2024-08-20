@@ -6,10 +6,13 @@ import Dropzone, { FileRejection } from "react-dropzone";
 import { cn } from "@/lib/utils";
 import { Image, Loader2, MousePointerSquareDashed } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { useUploadThing } from "@/lib/uploadthing";
 
-const ConfigurationPage = () => {
+const UploadPage = () => {
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+
+  const {} = useUploadThing("imageUploader");
 
   const onDropRejected = () => {};
   const onDropAccepted = () => {
@@ -87,4 +90,4 @@ const ConfigurationPage = () => {
   );
 };
 
-export default ConfigurationPage;
+export default UploadPage;
