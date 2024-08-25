@@ -81,11 +81,11 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col justify-between items-center sm:items-start">
                   <div className="flex gap-0.5">
-                    <Star className="h-4 w-4 text-green-600 fill-green-600" />
-                    <Star className="h-4 w-4 text-green-600 fill-green-600" />
-                    <Star className="h-4 w-4 text-green-600 fill-green-600" />
-                    <Star className="h-4 w-4 text-green-600 fill-green-600" />
-                    <Star className="h-4 w-4 text-green-600 fill-green-600" />
+                    <Star className="size-4 text-green-600 fill-green-600" />
+                    <Star className="size-4 text-green-600 fill-green-600" />
+                    <Star className="size-4 text-green-600 fill-green-600" />
+                    <Star className="size-4 text-green-600 fill-green-600" />
+                    <Star className="size-4 text-green-600 fill-green-600" />
                   </div>
                   <p>
                     <span className="font-semibold">1,250</span> happy customers
@@ -158,7 +158,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <p className="font-semibold">Jonathan</p>
                   <div className="flex gap-1.5 items-center text-zinc-600">
-                    <Check className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <Check className="size-4 stroke-[3px] text-green-600" />
                     <p className="text-sm">Verified Purchase</p>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <p className="font-semibold">Josh</p>
                   <div className="flex gap-1.5 items-center text-zinc-600">
-                    <Check className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <Check className="size-4 stroke-[3px] text-green-600" />
                     <p className="text-sm">Verified Purchase</p>
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function Home() {
                 })}
                 href="/configure/upload"
               >
-                Create your case now <ArrowRight className="h-4 w-4 ml-1.5" />
+                Create your case now <ArrowRight className="size-4 ml-1.5" />
               </Link>
             </div>
           </ul>
