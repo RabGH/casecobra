@@ -29,12 +29,25 @@ const UploadPage = () => {
   });
 
   const onDropRejected = (rejectedFiles: FileRejection[]) => {
-    const [file] = rejectedFiles;
     setIsDragOver(false);
-    toast({
-      title: `${file.file.type} type is not supported.`,
-      description: "Please choose a PNG, JPG, or JPEG image instead.",
-      variant: "destructive",
+    rejectedFiles.forEach((fileRejection) => {
+      const { file, errors } = fileRejection;
+      const fileSizeInMB = (file.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB with two decimal places
+      errors.forEach((error) => {
+        if (error.code === "file-too-large") {
+          toast({
+            title: `File size exceeds limit`,
+            description: `The file "${file.name}" is too large "${fileSizeInMB} MB". Please choose a file smaller than 4MB.`,
+            variant: "destructive",
+          });
+        } else if (error.code === "file-invalid-type") {
+          toast({
+            title: `${file.type} type is not supported.`,
+            description: "Please choose a PNG, JPG, or JPEG image instead.",
+            variant: "destructive",
+          });
+        }
+      });
     });
   };
 
@@ -62,6 +75,7 @@ const UploadPage = () => {
             "image/jpeg": [".jpeg"],
             "image/jpg": [".jpg"],
           }}
+          maxSize={4 * 1024 * 1024}
           onDragEnter={() => setIsDragOver(true)}
           onDragLeave={() => setIsDragOver(false)}
         >
