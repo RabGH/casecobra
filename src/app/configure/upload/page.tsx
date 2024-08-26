@@ -46,6 +46,12 @@ const UploadPage = () => {
             description: "Please choose a PNG, JPG, or JPEG image instead.",
             variant: "destructive",
           });
+        } else if (error.code === "too-many-files") {
+          toast({
+            title: `Too many files`,
+            description: `You can only upload one file at a time.`,
+            variant: `destructive`,
+          });
         }
       });
     });
@@ -76,6 +82,7 @@ const UploadPage = () => {
             "image/jpg": [".jpg"],
           }}
           maxSize={4 * 1024 * 1024}
+          maxFiles={1}
           onDragEnter={() => setIsDragOver(true)}
           onDragLeave={() => setIsDragOver(false)}
         >
@@ -86,11 +93,11 @@ const UploadPage = () => {
             >
               <input {...getInputProps()} />
               {isDragOver ? (
-                <MousePointerSquareDashed className="h-6 w-6 text-zinc-500 mb-2" />
+                <MousePointerSquareDashed className="size-6 text-zinc-500 mb-2" />
               ) : isUploading || isPending ? (
-                <Loader2 className="animate-spin h-6 w-6 text-zinc-500 mb-2" />
+                <Loader2 className="animate-spin size-6 text-zinc-500 mb-2" />
               ) : (
-                <Image className="h-6 w-6 text-zinc-500 mb-2" />
+                <Image className="size-6 text-zinc-500 mb-2" />
               )}
               <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
                 {isUploading ? (
