@@ -3,11 +3,11 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 
 const Footer = () => {
   return (
-    <footer className="bg-white h-20 relative">
+    <footer className="relative h-20 bg-white">
       <div className="border-t border-gray-200" />
       <MaxWidthWrapper>
-        <div className="h-full flex flex-col md:flex-row md:justify-between justify-center items-center">
-          <div className="text-center md:text-left pb-2 md:pb-0">
+        <div className="flex h-full flex-col items-center justify-center md:flex-row md:justify-between">
+          <div className="pb-2 text-center md:pb-0 md:text-left">
             <p className="text-sm text-muted-foreground">
               &copy; {new Date().getFullYear()} All rights reserved
             </p>

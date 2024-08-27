@@ -59,9 +59,9 @@
 
   /*! Utilities */
   .transition150 {
-    @apply transition-all ease-in-out duration-150;
+    @apply transition-all duration-150 ease-in-out;
   }
   .transition300 {
-    @apply transition-all ease-in-out duration-300;
+    @apply transition-all duration-300 ease-in-out;
   }
 }

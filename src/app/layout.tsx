@@ -23,8 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
 
-        <main className="flex flex-col min-h-[calc(100vh-3.5rem-1px)]">
-          <div className="flex-1 flex flex-col h-full">{children}</div>
+        <main className="flex min-h-[calc(100vh-3.5rem-1px)] flex-col">
+          <div className="flex h-full flex-1 flex-col">{children}</div>
           <Footer />
         </main>
         <Toaster />
