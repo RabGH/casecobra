@@ -75,3 +75,5 @@ export const FINISHES = {
     },
   ],
 } as const;
+
+export const BASE_PRICE = 14_00;

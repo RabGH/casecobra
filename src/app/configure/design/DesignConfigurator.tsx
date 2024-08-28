@@ -5,11 +5,12 @@ import NextImage from "next/image";
 import { Rnd } from "react-rnd";
 import { RadioGroup } from "@headlessui/react";
 
-import { cn } from "@/lib/utils";
+import { cn, formatePrice } from "@/lib/utils";
 import HandleComponent from "@/components/HandleComponent";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 import {
+  BASE_PRICE,
   COLORS,
   FINISHES,
   MATERIALS,
@@ -23,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { ArrowRight, Check, ChevronsUpDown } from "lucide-react";
 
 interface DesignConfiguratorProps {
   configId: string;
@@ -240,8 +241,15 @@ const DesignConfigurator = ({
                               </span>
                             </span>
 
-                            <RadioGroup.Description>
-                              <span></span>
+                            <RadioGroup.Description
+                              as="span"
+                              className={
+                                "mt-2 flex text-sm sm:ml-4 sm:mt-0 sm:flex-col sm:text-right"
+                              }
+                            >
+                              <span className="font-medium text-gray-900">
+                                {formatePrice(option.price / 100)}
+                              </span>
                             </RadioGroup.Description>
                           </RadioGroup.Option>
                         ))}
@@ -253,6 +261,23 @@ const DesignConfigurator = ({
             </div>
           </div>
         </ScrollArea>
+
+        <div className="h-16 w-full bg-white px-8">
+          <div className="h-px w-full bg-zinc-200" />
+          <div className="flex size-full items-center justify-end">
+            <div className="flex w-full items-center gap-6">
+              <p className="whitespace-nowrap font-medium">
+                {formatePrice(
+                  (BASE_PRICE + options.finish.price + options.material.price) /
+                    100,
+                )}
+              </p>
+              <Button size="sm" className="w-full">
+                Continue <ArrowRight className="ml-1.5 inline size-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
