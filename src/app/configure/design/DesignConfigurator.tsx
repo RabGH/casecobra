@@ -92,8 +92,6 @@ const DesignConfigurator = ({
 
   const { startUpload } = useUploadThing("imageUploader");
 
-  // let fileCounter = 0;
-
   async function saveConfiguration() {
     try {
       const {
@@ -134,9 +132,6 @@ const DesignConfigurator = ({
       const base64Data = base64.split(",")[1];
 
       const blob = base64ToBlob(base64Data, "image/png");
-
-      // const fileName = `case_${options.color.label}_${options.model.label}_${options.material.label}_${options.finish.label}_${Date.now()}_${fileCounter}.png`;
-      // fileCounter++;
 
       const file = new File([blob], "filename.png", { type: "image/png" });
 
