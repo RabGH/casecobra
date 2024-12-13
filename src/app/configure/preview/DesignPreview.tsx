@@ -57,10 +57,10 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
       if (url) router.push(url);
       else throw new Error("Unable to retrieve payment URL.");
     },
-    onError: () => {
+    onError: (e) => {
       toast({
         title: "Something went wrong.",
-        description: "There was an error on our end. Please try again.",
+        description: `There was an error on our end. Please try again. ${e.message}`,
         variant: "destructive",
       });
     },
@@ -170,8 +170,6 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
             <div className="mt-8 flex justify-end pb-12">
               <Button
-                isLoading={true}
-                loadingText="loading"
                 className="px-4 sm:px-6 lg:px-8"
                 onClick={() => handleCheckout()}
               >

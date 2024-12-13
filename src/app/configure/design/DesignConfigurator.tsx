@@ -52,10 +52,10 @@ const DesignConfigurator = ({
       await Promise.all([saveConfiguration(), _saveConfig(args)]);
     },
 
-    onError: () => {
+    onError: (e) => {
       toast({
         title: "Something went wrong",
-        description: "There was an error on our end. Please try again.",
+        description: `There was an error on our end. Please try again. ${e.message}`,
         variant: "destructive",
       });
     },
@@ -139,8 +139,7 @@ const DesignConfigurator = ({
     } catch (e) {
       toast({
         title: "Something went wrong",
-        description:
-          "There was a problem saving your config, please try again.",
+        description: `There was an error on our end. Please try again. ${e}`,
         variant: "destructive",
       });
     }

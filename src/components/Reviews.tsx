@@ -1,11 +1,10 @@
 "use client";
 
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
+import MaxWidthWrapper from "./MaxWidthWrapper";
 import { useInView } from "framer-motion";
-
 import { cn } from "@/lib/utils";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Phone from "@/components/Phone";
+import Phone from "./Phone";
 
 const PHONES = [
   "/testimonials/1.jpg",
@@ -17,8 +16,6 @@ const PHONES = [
 ];
 
 function splitArray<T>(array: Array<T>, numParts: number) {
-  // Purpose: This function splits an array into a specified number of subarrays (numParts).
-  // Logic: It iterates through the array, distributing each item into one of the numParts subarrays.
   const result: Array<Array<T>> = [];
 
   for (let i = 0; i < array.length; i++) {
@@ -28,41 +25,8 @@ function splitArray<T>(array: Array<T>, numParts: number) {
     }
     result[index].push(array[i]);
   }
+
   return result;
-}
-
-interface ReviewProps extends HTMLAttributes<HTMLDivElement> {
-  imgSrc: string;
-}
-// {...props} should be at the end, so it doesn't override
-function Review({ imgSrc, className, ...props }: ReviewProps) {
-  const POSSIBLE_ANIMATION_DELAYS = [
-    "0s",
-    "0.1s",
-    "0.2s",
-    "0.3s",
-    "0.4s",
-    "0.5s",
-  ];
-
-  // choose any random number, string and animation delay
-  const animationDelay =
-    POSSIBLE_ANIMATION_DELAYS[
-      Math.floor(Math.random() * POSSIBLE_ANIMATION_DELAYS.length)
-    ];
-
-  return (
-    <div
-      className={cn(
-        "animate-fade-in rounded-[2.25rem] bg-white p-6 opacity-0 shadow-xl shadow-slate-900/5",
-        className,
-      )}
-      style={{ animationDelay }}
-      {...props}
-    >
-      <Phone imgSrc={imgSrc} />
-    </div>
-  );
 }
 
 function ReviewColumn({
@@ -76,12 +40,8 @@ function ReviewColumn({
   reviewClassName?: (reviewIndex: number) => string;
   msPerPixel?: number;
 }) {
-  // Ref for the div we are watching which is the column of the images
   const columnRef = useRef<HTMLDivElement | null>(null);
-  // Check for the size of the column to set the duration / speed of the animation on different devices
   const [columnHeight, setColumnHeight] = useState(0);
-  // observes when the div element using the columnRef is resized and when it is we offset it's height
-  // Now we know the height of the column, we can set the duration / speed by multiplying per pixel of the column height
   const duration = `${columnHeight * msPerPixel}ms`;
 
   useEffect(() => {
@@ -92,7 +52,7 @@ function ReviewColumn({
     });
 
     resizeObserver.observe(columnRef.current);
-    // stay clean, disconnect the useEffect after it runs
+
     return () => {
       resizeObserver.disconnect();
     };
@@ -115,8 +75,42 @@ function ReviewColumn({
   );
 }
 
+interface ReviewProps extends HTMLAttributes<HTMLDivElement> {
+  imgSrc: string;
+}
+
+function Review({ imgSrc, className, ...props }: ReviewProps) {
+  const POSSIBLE_ANIMATION_DELAYS = [
+    "0s",
+    "0.1s",
+    "0.2s",
+    "0.3s",
+    "0.4s",
+    "0.5s",
+  ];
+
+  const animationDelay =
+    POSSIBLE_ANIMATION_DELAYS[
+      Math.floor(Math.random() * POSSIBLE_ANIMATION_DELAYS.length)
+    ];
+
+  return (
+    <div
+      className={cn(
+        "animate-fade-in rounded-[2.25rem] bg-white p-6 opacity-0 shadow-xl shadow-slate-900/5",
+        className,
+      )}
+      style={{ animationDelay }}
+      {...props}
+    >
+      <Phone imgSrc={imgSrc} />
+    </div>
+  );
+}
+
 function ReviewGrid() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  // @ts-ignore
   const isInView = useInView(containerRef, { once: true, amount: 0.4 });
   const columns = splitArray(PHONES, 3);
   const column1 = columns[0];
@@ -155,8 +149,8 @@ function ReviewGrid() {
           />
         </>
       ) : null}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-slate-100" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-100" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-100" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-100" />
     </div>
   );
 }
