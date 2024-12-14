@@ -33,7 +33,7 @@ const Navbar = async () => {
                 </Link>
                 {isAdmin ? (
                   <Link
-                    href="/"
+                    href="/dashboard"
                     className={buttonVariants({
                       size: "sm",
                       variant: "ghost",
