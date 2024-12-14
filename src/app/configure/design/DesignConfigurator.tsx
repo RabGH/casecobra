@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ArrowRight, Check, ChevronsUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { cn, formatePrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import HandleComponent from "@/components/HandleComponent";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -370,7 +370,7 @@ const DesignConfigurator = ({
                               }
                             >
                               <span className="font-medium text-gray-900">
-                                {formatePrice(option.price / 100)}
+                                {formatPrice(option.price / 100)}
                               </span>
                             </RadioGroup.Description>
                           </RadioGroup.Option>
@@ -389,7 +389,7 @@ const DesignConfigurator = ({
           <div className="flex size-full items-center justify-end">
             <div className="flex w-full items-center gap-6">
               <p className="whitespace-nowrap font-medium">
-                {formatePrice(
+                {formatPrice(
                   (BASE_PRICE + options.finish.price + options.material.price) /
                     100,
                 )}
